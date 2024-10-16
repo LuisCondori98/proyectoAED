@@ -3,7 +3,6 @@
 ## Curso: Algoritmos y Estructura de Datos
 - **Semestre**: 2024
 - **Ciclo**: Segundo
-- **Secciones**: Todas
 
 ## 1. Fundamentos
 El curso de Algoritmos y Estructura de Datos proporciona a los alumnos las herramientas para diseñar algoritmos eficientes que resuelvan problemas de manera óptima, teniendo en cuenta el uso de recursos como la memoria y el tiempo de procesamiento.
@@ -73,5 +72,8 @@ En la sección de mantenimiento, se podrán realizar las siguientes operaciones 
 El sistema será implementado en **Java**, aplicando los principios y estructuras de datos estudiados durante el curso.
 
 ## 6. Colaboradores
-- [Nombre del Coordinador]
-- [Nombres de los demás integrantes del grupo]
+- Coordinador:
+  - Víctor Miguel López rojas
+- Integrantes
+  - Jose Nicolás Matallana
+  - Luis Condori Anaya

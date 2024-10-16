@@ -1,0 +1,141 @@
+package gui;
+
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
+import clases.Producto;
+
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.JTextField;
+
+public class dlgProducto extends JDialog {
+
+	private static final long serialVersionUID = 1L;
+	private JTable tblTable;
+	private DefaultTableModel modelo;
+	private JLabel lblNewLabel;
+	private JTextField textField;
+	private JLabel lblNombre;
+	private JTextField textField_1;
+	private JTextField textField_2;
+	private JLabel lblPrecio;
+	private JLabel lblProductos;
+	private JLabel lblS;
+	private JLabel lblStockMinimo;
+	private JLabel lblStockMaximo;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		try {
+			dlgProducto dialog = new dlgProducto();
+			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setVisible(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Create the dialog.
+	 */
+	public dlgProducto() {
+		setTitle("Producto Mantenimiento");
+		setBounds(100, 100, 606, 550);
+		getContentPane().setLayout(null);
+		{
+			JScrollPane scrollPane = new JScrollPane();
+			scrollPane.setBounds(10, 174, 572, 329);
+			getContentPane().add(scrollPane);
+			{
+				tblTable = new JTable();
+				tblTable.setFillsViewportHeight(true);
+				scrollPane.setViewportView(tblTable);
+				
+				modelo = new DefaultTableModel();
+				modelo.addColumn("código");
+				modelo.addColumn("nombre");
+				modelo.addColumn("precio");
+				modelo.addColumn("Stock actual");
+				modelo.addColumn("Stock minimo");
+				modelo.addColumn("Stock maximoz");
+				tblTable.setModel(modelo);
+
+			}
+		}
+		
+		lblNewLabel = new JLabel("Codigo");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblNewLabel.setBounds(10, 42, 73, 26);
+		getContentPane().add(lblNewLabel);
+		
+		textField = new JTextField();
+		textField.setBounds(76, 44, 111, 26);
+		getContentPane().add(textField);
+		textField.setColumns(10);
+		
+		lblNombre = new JLabel("Nombre");
+		lblNombre.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblNombre.setBounds(10, 78, 73, 26);
+		getContentPane().add(lblNombre);
+		
+		textField_1 = new JTextField();
+		textField_1.setColumns(10);
+		textField_1.setBounds(76, 80, 111, 26);
+		getContentPane().add(textField_1);
+		
+		textField_2 = new JTextField();
+		textField_2.setColumns(10);
+		textField_2.setBounds(76, 116, 111, 26);
+		getContentPane().add(textField_2);
+		
+		lblPrecio = new JLabel("Precio");
+		lblPrecio.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblPrecio.setBounds(10, 116, 73, 26);
+		getContentPane().add(lblPrecio);
+		
+		lblProductos = new JLabel("Productos");
+		lblProductos.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblProductos.setBounds(256, 10, 73, 26);
+		getContentPane().add(lblProductos);
+		
+		lblS = new JLabel("Stock actual");
+		lblS.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblS.setBounds(197, 42, 92, 26);
+		getContentPane().add(lblS);
+		
+		lblStockMinimo = new JLabel("Stock minimo");
+		lblStockMinimo.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblStockMinimo.setBounds(197, 78, 92, 26);
+		getContentPane().add(lblStockMinimo);
+		
+		lblStockMaximo = new JLabel("Stock maximo");
+		lblStockMaximo.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblStockMaximo.setBounds(197, 116, 92, 26);
+		getContentPane().add(lblStockMaximo);
+	}
+	
+	ArrayList prod = new ArrayList<Producto>();
+	
+	void listar() {
+		Producto p;
+		modelo.setRowCount(0);
+		for (int i=0; i<prod.tamanio(); i++) {
+			xp = prod.obtener(i);
+			Object[] fila = { p.getCodigo(),
+					          p.getNombre() 
+					         };
+			modelo.addRow(fila);
+		}
+	}
+}

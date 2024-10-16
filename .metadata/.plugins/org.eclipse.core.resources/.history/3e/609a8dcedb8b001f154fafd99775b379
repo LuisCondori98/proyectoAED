@@ -1,0 +1,14 @@
+package arreglos;
+
+public class ArregloCliente {
+	
+	private ArrayList<Cliente> cliente;
+	
+	public ArregloCliente() {
+		
+		cliente = new ArrayCliente<Cliente>();
+		
+		
+	}
+
+}

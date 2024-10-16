@@ -1,0 +1,17 @@
+package arreglos;
+
+import java.util.ArrayList;
+import clases.Cliente;
+
+public class ArregloCliente {
+	
+	private ArrayList<Cliente> cliente;
+	
+	public ArregloCliente() {
+		
+		cliente = new ArrayList<Cliente>();
+		
+		
+	}
+
+}

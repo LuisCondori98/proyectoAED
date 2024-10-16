@@ -1,0 +1,10 @@
+package clases;
+
+public class Venta {
+
+	private int codigoVenta, codigoCliente, codigoProducto, cantidad;
+	private String fecha;
+	private double precio;
+	
+	
+}

@@ -1,0 +1,76 @@
+package gui;
+
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.JTextField;
+
+public class dlgProducto extends JDialog {
+
+	private static final long serialVersionUID = 1L;
+	private JTable tblTable;
+	private DefaultTableModel modelo;
+	private JLabel lblNewLabel;
+	private JTextField textField;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		try {
+			dlgProducto dialog = new dlgProducto();
+			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setVisible(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Create the dialog.
+	 */
+	public dlgProducto() {
+		setTitle("Producto Mantenimiento");
+		setBounds(100, 100, 606, 550);
+		getContentPane().setLayout(null);
+		{
+			JScrollPane scrollPane = new JScrollPane();
+			scrollPane.setBounds(10, 174, 572, 329);
+			getContentPane().add(scrollPane);
+			{
+				tblTable = new JTable();
+				tblTable.setFillsViewportHeight(true);
+				scrollPane.setViewportView(tblTable);
+				
+				modelo = new DefaultTableModel();
+				modelo.addColumn("código");
+				modelo.addColumn("nombre");
+				modelo.addColumn("precio");
+				modelo.addColumn("Stock actual");
+				modelo.addColumn("Stock minimo");
+				modelo.addColumn("Stock maximoz");
+				tblTable.setModel(modelo);
+
+			}
+		}
+		
+		lblNewLabel = new JLabel("Codigo");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblNewLabel.setBounds(10, 42, 73, 26);
+		getContentPane().add(lblNewLabel);
+		
+		textField = new JTextField();
+		textField.setBounds(10, 67, 111, 26);
+		getContentPane().add(textField);
+		textField.setColumns(10);
+	}
+}

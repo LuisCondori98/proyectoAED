@@ -1,0 +1,20 @@
+package clases;
+
+public class Venta {
+
+	private int codigoVenta, codigoCliente, codigoProducto, cantidad;
+	private String fecha;
+	private double precio;
+	
+	public Venta(int codigoVenta, int codigoCliente, int codigoProducto, int cantidad, String fecha, double precio) {
+		
+		this.codigoVenta = codigoVenta;
+		this.codigoCliente = codigoCliente;
+		this.codigoProducto = codigoProducto;
+		this.cantidad = cantidad;
+		this.fecha = fecha;
+		this.precio = precio;
+	}
+	
+	
+}

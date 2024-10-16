@@ -1,0 +1,9 @@
+package clases;
+
+public class Cliente {
+
+	private int codigoCliente;
+	private String nombres, apellidos, direccion, telefono, dni;
+	
+	
+}

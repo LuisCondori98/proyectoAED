@@ -11,14 +11,14 @@ private ArrayList<Producto> producto;
 	public ArregloProducto() {
 		
 		producto = new ArrayList<Producto>();
-		adicionar(new Producto(1001, 53, 1, 100, "Gaseosa", 6.5));
-		adicionar(new Producto(1002, 43, 1, 100, "Galleta", 2.5));
-		adicionar(new Producto(1003, 28, 1, 100, "Yogurt", 4.5));
-		adicionar(new Producto(1004, 10, 1, 100, "Fideos", 9.5));
-		adicionar(new Producto(1005, 41, 1, 100, "Volt", 5));
-		adicionar(new Producto(1006, 23, 1, 100, "Sporade", 2.5));
-		adicionar(new Producto(1007, 18, 1, 100, "Doritos", 2.5));
-		adicionar(new Producto(1008, 3, 1, 100, "Turron", 1.5));
+		adicionar(new Producto(2001, 53, 1, 100, "Gaseosa", 6.5));
+		adicionar(new Producto(2002, 43, 1, 100, "Galleta", 2.5));
+		adicionar(new Producto(2003, 28, 1, 100, "Yogurt", 4.5));
+		adicionar(new Producto(2004, 10, 1, 100, "Fideos", 9.5));
+		adicionar(new Producto(2005, 41, 1, 100, "Volt", 5));
+		adicionar(new Producto(2006, 23, 1, 100, "Sporade", 2.5));
+		adicionar(new Producto(2007, 18, 1, 100, "Doritos", 2.5));
+		adicionar(new Producto(2008, 3, 1, 100, "Turron", 1.5));
 	}
 	
 	public void adicionar(Producto p) {

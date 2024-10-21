@@ -3,6 +3,7 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
+import javax.swing.table.TableColumnModel;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -15,12 +16,16 @@ import arreglos.ArregloProducto;
 import clases.Producto;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseEvent;
 
-public class dlgProducto extends JDialog implements ActionListener {
+public class dlgProducto extends JDialog implements ActionListener, MouseListener {
 
 	private static final long serialVersionUID = 1L;
 	private JTable tblTable;
@@ -31,6 +36,7 @@ public class dlgProducto extends JDialog implements ActionListener {
 	private JTextField txtNombre;
 	private JTextField txtPrecio;
 	private JLabel lblPrecio;
+	private JScrollPane scrollPane;
 	private JLabel lblProductos;
 	private JLabel lblS;
 	private JLabel lblStockMinimo;
@@ -62,6 +68,7 @@ public class dlgProducto extends JDialog implements ActionListener {
 			getContentPane().add(scrollPane);
 			{
 				tblTable = new JTable();
+				tblTable.addMouseListener(this);
 				tblTable.setFillsViewportHeight(true);
 				scrollPane.setViewportView(tblTable);
 				
@@ -83,7 +90,7 @@ public class dlgProducto extends JDialog implements ActionListener {
 		getContentPane().add(lblNewLabel);
 		
 		txtCodigo = new JTextField();
-		txtCodigo.setBounds(76, 44, 111, 26);
+		txtCodigo.setBounds(76, 44, 61, 26);
 		getContentPane().add(txtCodigo);
 		txtCodigo.setColumns(10);
 		
@@ -94,12 +101,12 @@ public class dlgProducto extends JDialog implements ActionListener {
 		
 		txtNombre = new JTextField();
 		txtNombre.setColumns(10);
-		txtNombre.setBounds(76, 80, 111, 26);
+		txtNombre.setBounds(76, 80, 151, 26);
 		getContentPane().add(txtNombre);
 		
 		txtPrecio = new JTextField();
 		txtPrecio.setColumns(10);
-		txtPrecio.setBounds(76, 116, 111, 26);
+		txtPrecio.setBounds(76, 116, 151, 26);
 		getContentPane().add(txtPrecio);
 		
 		lblPrecio = new JLabel("Precio");
@@ -114,37 +121,37 @@ public class dlgProducto extends JDialog implements ActionListener {
 		
 		lblS = new JLabel("Stock actual");
 		lblS.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblS.setBounds(197, 42, 92, 26);
+		lblS.setBounds(237, 42, 92, 26);
 		getContentPane().add(lblS);
 		
 		lblStockMinimo = new JLabel("Stock minimo");
 		lblStockMinimo.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblStockMinimo.setBounds(197, 78, 92, 26);
+		lblStockMinimo.setBounds(237, 78, 92, 26);
 		getContentPane().add(lblStockMinimo);
 		
 		lblStockMaximo = new JLabel("Stock maximo");
 		lblStockMaximo.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblStockMaximo.setBounds(197, 114, 92, 26);
+		lblStockMaximo.setBounds(237, 114, 92, 26);
 		getContentPane().add(lblStockMaximo);
 		
 		txtStockAct = new JTextField();
 		txtStockAct.setColumns(10);
-		txtStockAct.setBounds(299, 42, 111, 26);
+		txtStockAct.setBounds(341, 44, 111, 26);
 		getContentPane().add(txtStockAct);
 		
 		txtStockMin = new JTextField();
 		txtStockMin.setColumns(10);
-		txtStockMin.setBounds(299, 78, 111, 26);
+		txtStockMin.setBounds(341, 80, 111, 26);
 		getContentPane().add(txtStockMin);
 		
 		txtStockMax = new JTextField();
 		txtStockMax.setColumns(10);
-		txtStockMax.setBounds(299, 114, 111, 26);
+		txtStockMax.setBounds(341, 116, 111, 26);
 		getContentPane().add(txtStockMax);
 		
 		btnAgregar = new JButton("Agregar");
 		btnAgregar.addActionListener(this);
-		btnAgregar.setBounds(448, 31, 134, 21);
+		btnAgregar.setBounds(462, 31, 120, 21);
 		getContentPane().add(btnAgregar);
 		
 		btnIngreso = new JButton("Ingreso");
@@ -172,13 +179,22 @@ public class dlgProducto extends JDialog implements ActionListener {
 		getContentPane().add(btnEliminacion);
 		
 		btnCambiar = new JButton("Cambiar");
-		btnCambiar.setBounds(448, 62, 134, 21);
+		btnCambiar.addActionListener(this);
+		btnCambiar.setBounds(462, 62, 120, 21);
 		getContentPane().add(btnCambiar);
 		
 		btnEliminar = new JButton("Eliminar");
-		btnEliminar.setBounds(448, 93, 134, 21);
+		btnEliminar.addActionListener(this);
+		btnEliminar.setBounds(462, 93, 120, 21);
 		getContentPane().add(btnEliminar);
 		
+		btnBuscar = new JButton("Buscar");
+		btnBuscar.addActionListener(this);
+		btnBuscar.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnBuscar.setBounds(147, 42, 80, 26);
+		getContentPane().add(btnBuscar);
+		
+		btnBuscar.setVisible(false);
 		ocultarCRUD();
 		ocultarTxt();
 		listar();
@@ -196,8 +212,18 @@ public class dlgProducto extends JDialog implements ActionListener {
 	private JButton btnEliminacion;
 	private JButton btnCambiar;
 	private JButton btnEliminar;
+	private JButton btnBuscar;
 	
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnCambiar) {
+			actionPerformedBtnCambiar(e);
+		}
+		if (e.getSource() == btnEliminar) {
+			actionPerformedBtnEliminar(e);
+		}
+		if (e.getSource() == btnBuscar) {
+			actionPerformedBtnBuscar(e);
+		}
 		if (e.getSource() == btnEliminacion) {
 			actionPerformedBtnEliminacion(e);
 		}
@@ -217,7 +243,8 @@ public class dlgProducto extends JDialog implements ActionListener {
 	
 	protected void actionPerformedBtnAgregar(ActionEvent e) {
 		
-		txtCodigo.setVisible(false);
+		txtCodigo.setEditable(false);
+		txtCodigo.setText(""+prod.codigoCorrelativo());
 		String nombre = txtNombre.getText();
 		double precio = Double.parseDouble(txtPrecio.getText());
 		int stockAc = Integer.parseInt(txtStockAct.getText());
@@ -296,7 +323,9 @@ public class dlgProducto extends JDialog implements ActionListener {
 		ocultarCRUD();
 		btnAgregar.setVisible(true);
 		mostrarTxt();
-		txtCodigo.setVisible(false);
+		txtCodigo.setText(prod.codigoCorrelativo()+"");
+		txtCodigo.setEditable(false);
+		limpiar();
 	}
 	
 	protected void actionPerformedBtnModificacion(ActionEvent e) {
@@ -305,6 +334,12 @@ public class dlgProducto extends JDialog implements ActionListener {
 		btnModificacion.setVisible(false);
 		ocultarCRUD();
 		btnCambiar.setVisible(true);
+		ocultarTxt();
+		txtCodigo.setVisible(true);
+		txtCodigo.setText("");
+		btnBuscar.setVisible(true);
+		limpiar();
+		txtCodigo.setEditable(true);
 	}
 	
 	protected void actionPerformedBtnConsulta(ActionEvent e) {
@@ -312,6 +347,9 @@ public class dlgProducto extends JDialog implements ActionListener {
 		mostrarBtnMantenimiento();
 		btnConsulta.setVisible(false);
 		ocultarCRUD();
+		btnBuscar.setVisible(true);
+		limpiar();
+		txtCodigo.setEditable(true);
 	}
 	
 	protected void actionPerformedBtnEliminacion(ActionEvent e) {
@@ -320,5 +358,79 @@ public class dlgProducto extends JDialog implements ActionListener {
 		btnEliminacion.setVisible(false);
 		ocultarCRUD();
 		btnEliminar.setVisible(true);
+		btnBuscar.setVisible(true);
+		limpiar();
+		ocultarTxt();
+		txtCodigo.setVisible(true);
+	}
+	
+	protected void actionPerformedBtnBuscar(ActionEvent e) {
+		
+		int codigo = Integer.parseInt(txtCodigo.getText());
+		
+		String datos =  "\nCodigo \t: " + prod.buscar(codigo).getCodigoProducto() +
+						"\nProducto \t: " + prod.buscar(codigo).getNombre() +
+						"\nPrecio \t: " + prod.buscar(codigo).getPrecio() + 
+						"\nStock \t: " + prod.buscar(codigo).getStockActual() +
+						"\nStock Minimo \t: " + prod.buscar(codigo).getStockMinimo() +
+						"\nStock Maximo \t: " + prod.buscar(codigo).getStockMaximo();;
+		
+		System.out.println(prod.buscar(codigo));
+		JOptionPane.showMessageDialog(null, datos, "Información", JOptionPane.INFORMATION_MESSAGE);
+	}
+	
+	public void mouseClicked(MouseEvent e) {
+		if (e.getSource() == tblTable) {
+			mouseClickedTblTable(e);
+		}
+	}
+	
+	public void mouseEntered(MouseEvent e) {
+	}
+	public void mouseExited(MouseEvent e) {
+	}
+	public void mousePressed(MouseEvent e) {
+	}
+	public void mouseReleased(MouseEvent e) {
+	}
+	protected void mouseClickedTblTable(MouseEvent e) {
+		mostrarTxt();
+		editarFila();
+	}
+	
+	void editarFila() {
+		if (prod.tamanio() == 0)
+			limpiar();
+		else {
+			Producto p = prod.obtener(tblTable.getSelectedRow());
+			txtCodigo.setText("" + p.getCodigoProducto());
+			txtNombre.setText(p.getNombre());
+			txtPrecio.setText("" + p.getPrecio());
+			txtStockAct.setText("" + p.getStockActual());
+			txtStockMin.setText("" + p.getStockMinimo());
+			txtStockMax.setText("" + p.getStockMaximo());
+			/*txtDni.setText(x.getDni());
+			txtPeso.setText("" + x.getPeso());
+			txtEstatura.setText("" + x.getEstatura());
+			cboEstadoCivil.setSelectedIndex(x.getEstado());*/
+		}
+	}
+	
+	protected void actionPerformedBtnEliminar(ActionEvent e) {
+		
+		int codigo = Integer.parseInt(txtCodigo.getText());
+		
+		prod.eliminar(codigo);
+	}
+	
+	protected void actionPerformedBtnCambiar(ActionEvent e) {
+		
+		txtNombre.getText();
+		txtPrecio.getText();
+		txtStockAct.getText();
+		txtStockMin.getText();
+		txtStockMax.getText();
+		
+		
 	}
 }

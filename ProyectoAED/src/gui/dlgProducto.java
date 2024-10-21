@@ -60,11 +60,11 @@ public class dlgProducto extends JDialog implements ActionListener, MouseListene
 	 */
 	public dlgProducto() {
 		setTitle("Producto Mantenimiento");
-		setBounds(100, 100, 606, 550);
+		setBounds(100, 100, 472, 584);
 		getContentPane().setLayout(null);
 		{
 			JScrollPane scrollPane = new JScrollPane();
-			scrollPane.setBounds(10, 188, 572, 315);
+			scrollPane.setBounds(10, 188, 442, 315);
 			getContentPane().add(scrollPane);
 			{
 				tblTable = new JTable();
@@ -151,7 +151,7 @@ public class dlgProducto extends JDialog implements ActionListener, MouseListene
 		
 		btnAgregar = new JButton("Agregar");
 		btnAgregar.addActionListener(this);
-		btnAgregar.setBounds(462, 31, 120, 21);
+		btnAgregar.setBounds(10, 516, 120, 21);
 		getContentPane().add(btnAgregar);
 		
 		btnIngreso = new JButton("Ingreso");
@@ -163,29 +163,29 @@ public class dlgProducto extends JDialog implements ActionListener, MouseListene
 		btnModificacion = new JButton("Modificacion");
 		btnModificacion.addActionListener(this);
 		btnModificacion.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnModificacion.setBounds(131, 152, 111, 26);
+		btnModificacion.setBounds(117, 152, 111, 26);
 		getContentPane().add(btnModificacion);
 		
 		btnConsulta = new JButton("Consulta");
 		btnConsulta.addActionListener(this);
 		btnConsulta.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnConsulta.setBounds(268, 150, 97, 26);
+		btnConsulta.setBounds(237, 152, 97, 26);
 		getContentPane().add(btnConsulta);
 		
 		btnEliminacion = new JButton("Eliminacion");
 		btnEliminacion.addActionListener(this);
 		btnEliminacion.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnEliminacion.setBounds(388, 150, 111, 26);
+		btnEliminacion.setBounds(341, 152, 111, 26);
 		getContentPane().add(btnEliminacion);
 		
 		btnCambiar = new JButton("Cambiar");
 		btnCambiar.addActionListener(this);
-		btnCambiar.setBounds(462, 62, 120, 21);
+		btnCambiar.setBounds(153, 516, 120, 21);
 		getContentPane().add(btnCambiar);
 		
 		btnEliminar = new JButton("Eliminar");
 		btnEliminar.addActionListener(this);
-		btnEliminar.setBounds(462, 93, 120, 21);
+		btnEliminar.setBounds(294, 516, 120, 21);
 		getContentPane().add(btnEliminar);
 		
 		btnBuscar = new JButton("Buscar");
@@ -199,8 +199,6 @@ public class dlgProducto extends JDialog implements ActionListener, MouseListene
 		ocultarTxt();
 		listar();
 	}
-	
-	ArregloProducto prod = new ArregloProducto();
 	
 	private JTextField txtStockAct;
 	private JTextField txtStockMin;
@@ -241,6 +239,91 @@ public class dlgProducto extends JDialog implements ActionListener, MouseListene
 		}
 	}
 	
+	ArregloProducto prod = new ArregloProducto();
+	
+	void listar() {
+		Producto p;
+		modelo.setRowCount(0);
+		for (int i=0; i<prod.tamanio(); i++) {
+			p = prod.obtener(i);
+			Object[] fila = { p.getCodigoProducto(),
+					          p.getNombre(),
+					          p.getPrecio(),
+					          p.getStockActual(),
+					          p.getStockMinimo(),
+					          p.getStockMaximo()
+					         };
+			modelo.addRow(fila);
+		}
+	}
+	
+	protected void actionPerformedBtnIngreso(ActionEvent e) {
+		
+		mostrarBtnMantenimiento();
+		btnIngreso.setEnabled(false);
+		ocultarCRUD();
+		btnAgregar.setVisible(true);
+		mostrarTxt();
+		txtCodigo.setText(prod.codigoCorrelativo()+"");
+		txtCodigo.setEditable(false);
+		limpiar();
+	}
+	
+	protected void actionPerformedBtnModificacion(ActionEvent e) {
+		
+		mostrarBtnMantenimiento();
+		btnModificacion.setEnabled(false);
+		ocultarCRUD();
+		btnCambiar.setVisible(true);
+		txtCodigo.setVisible(true);
+		txtCodigo.setText("");
+		btnBuscar.setVisible(true);
+		limpiar();
+		txtCodigo.setEditable(true);
+		mostrarTxt();
+		JOptionPane.showMessageDialog(null, "seleccione de la tabla para modificar", "Información", JOptionPane.INFORMATION_MESSAGE);
+	}
+	
+	protected void actionPerformedBtnConsulta(ActionEvent e) {
+		
+		mostrarBtnMantenimiento();
+		btnConsulta.setEnabled(false);
+		ocultarCRUD();
+		btnBuscar.setVisible(true);
+		limpiar();
+		txtCodigo.setEditable(true);
+		txtCodigo.setText("");
+	}
+	
+	protected void actionPerformedBtnEliminacion(ActionEvent e) {
+		
+		mostrarBtnMantenimiento();
+		btnEliminacion.setEnabled(false);
+		ocultarCRUD();
+		btnEliminar.setVisible(true);
+		btnBuscar.setVisible(true);
+		limpiar();
+		ocultarTxt();
+		txtCodigo.setVisible(true);
+		txtCodigo.setEditable(true);
+		txtCodigo.setText("");
+	}
+	
+	protected void actionPerformedBtnBuscar(ActionEvent e) {
+		
+		int codigo = Integer.parseInt(txtCodigo.getText());
+		
+		String datos =  "\nCodigo \t: " + prod.buscar(codigo).getCodigoProducto() +
+						"\nProducto \t: " + prod.buscar(codigo).getNombre() +
+						"\nPrecio \t: " + prod.buscar(codigo).getPrecio() + 
+						"\nStock \t: " + prod.buscar(codigo).getStockActual() +
+						"\nStock Minimo \t: " + prod.buscar(codigo).getStockMinimo() +
+						"\nStock Maximo \t: " + prod.buscar(codigo).getStockMaximo();;
+		
+		System.out.println(prod.buscar(codigo));
+		JOptionPane.showMessageDialog(null, datos, "Información", JOptionPane.INFORMATION_MESSAGE);
+	}
+	
 	protected void actionPerformedBtnAgregar(ActionEvent e) {
 		
 		txtCodigo.setEditable(false);
@@ -256,19 +339,73 @@ public class dlgProducto extends JDialog implements ActionListener, MouseListene
 		limpiar();
 	}
 	
-	void listar() {
-		Producto p;
-		modelo.setRowCount(0);
-		for (int i=0; i<prod.tamanio(); i++) {
-			p = prod.obtener(i);
-			Object[] fila = { p.getCodigoProducto(),
-					          p.getNombre(),
-					          p.getPrecio(),
-					          p.getStockActual(),
-					          p.getStockMinimo(),
-					          p.getStockMaximo()
-					         };
-			modelo.addRow(fila);
+	protected void actionPerformedBtnCambiar(ActionEvent e) {
+		
+		txtNombre.getText();
+		txtPrecio.getText();
+		txtStockAct.getText();
+		txtStockMin.getText();
+		txtStockMax.getText();
+	}
+	
+	protected void actionPerformedBtnEliminar(ActionEvent e) {
+		
+		int codigo = Integer.parseInt(txtCodigo.getText().trim());
+		
+		Producto p = prod.buscar(codigo);
+				
+		if (p != null) {
+			int ok = confirmar("¿ Desea eliminar el registro ?");
+			
+			if (ok == 0) {
+				
+				prod.eliminar(p);
+				listar();
+			}
+		}
+		else
+			error("El código " + codigo + " no existe", txtCodigo);
+	}
+	
+	public void mouseClicked(MouseEvent e) {
+		
+		if (e.getSource() == tblTable) {
+			
+			mouseClickedTblTable(e);
+		}
+	}
+	
+	public void mouseEntered(MouseEvent e) {
+	}
+	public void mouseExited(MouseEvent e) {
+	}
+	public void mousePressed(MouseEvent e) {
+	}
+	public void mouseReleased(MouseEvent e) {
+	}
+	protected void mouseClickedTblTable(MouseEvent e) {
+		mostrarTxt();
+		editarFila();
+	}
+	
+	void editarFila() {
+		
+		if (prod.tamanio() == 0)
+			
+			limpiar();
+		else {
+			
+			Producto p = prod.obtener(tblTable.getSelectedRow());
+			txtCodigo.setText("" + p.getCodigoProducto());
+			txtNombre.setText(p.getNombre());
+			txtPrecio.setText("" + p.getPrecio());
+			txtStockAct.setText("" + p.getStockActual());
+			txtStockMin.setText("" + p.getStockMinimo());
+			txtStockMax.setText("" + p.getStockMaximo());
+			/*txtDni.setText(x.getDni());
+			txtPeso.setText("" + x.getPeso());
+			txtEstatura.setText("" + x.getEstatura());
+			cboEstadoCivil.setSelectedIndex(x.getEstado());*/
 		}
 	}
 	
@@ -303,10 +440,10 @@ public class dlgProducto extends JDialog implements ActionListener, MouseListene
 	
 	void mostrarBtnMantenimiento() {
 		
-		btnIngreso.setVisible(true);
-		btnModificacion.setVisible(true);
-		btnConsulta.setVisible(true);
-		btnEliminacion.setVisible(true);
+		btnIngreso.setEnabled(true);
+		btnModificacion.setEnabled(true);
+		btnConsulta.setEnabled(true);
+		btnEliminacion.setEnabled(true);
 	}
 	
 	void ocultarCRUD() {
@@ -316,121 +453,20 @@ public class dlgProducto extends JDialog implements ActionListener, MouseListene
 		btnEliminar.setVisible(false);
 	}
 	
-	protected void actionPerformedBtnIngreso(ActionEvent e) {
+	void error(String s, JTextField txt) {
 		
-		mostrarBtnMantenimiento();
-		btnIngreso.setVisible(false);
-		ocultarCRUD();
-		btnAgregar.setVisible(true);
-		mostrarTxt();
-		txtCodigo.setText(prod.codigoCorrelativo()+"");
-		txtCodigo.setEditable(false);
-		limpiar();
+		mensaje(s);
+		txt.setText("");
+		txt.requestFocus();
 	}
 	
-	protected void actionPerformedBtnModificacion(ActionEvent e) {
+	void mensaje(String s) {
 		
-		mostrarBtnMantenimiento();
-		btnModificacion.setVisible(false);
-		ocultarCRUD();
-		btnCambiar.setVisible(true);
-		ocultarTxt();
-		txtCodigo.setVisible(true);
-		txtCodigo.setText("");
-		btnBuscar.setVisible(true);
-		limpiar();
-		txtCodigo.setEditable(true);
+		JOptionPane.showMessageDialog(this, s, "Información", 0);
 	}
 	
-	protected void actionPerformedBtnConsulta(ActionEvent e) {
+	int confirmar(String s) {
 		
-		mostrarBtnMantenimiento();
-		btnConsulta.setVisible(false);
-		ocultarCRUD();
-		btnBuscar.setVisible(true);
-		limpiar();
-		txtCodigo.setEditable(true);
-	}
-	
-	protected void actionPerformedBtnEliminacion(ActionEvent e) {
-		
-		mostrarBtnMantenimiento();
-		btnEliminacion.setVisible(false);
-		ocultarCRUD();
-		btnEliminar.setVisible(true);
-		btnBuscar.setVisible(true);
-		limpiar();
-		ocultarTxt();
-		txtCodigo.setVisible(true);
-	}
-	
-	protected void actionPerformedBtnBuscar(ActionEvent e) {
-		
-		int codigo = Integer.parseInt(txtCodigo.getText());
-		
-		String datos =  "\nCodigo \t: " + prod.buscar(codigo).getCodigoProducto() +
-						"\nProducto \t: " + prod.buscar(codigo).getNombre() +
-						"\nPrecio \t: " + prod.buscar(codigo).getPrecio() + 
-						"\nStock \t: " + prod.buscar(codigo).getStockActual() +
-						"\nStock Minimo \t: " + prod.buscar(codigo).getStockMinimo() +
-						"\nStock Maximo \t: " + prod.buscar(codigo).getStockMaximo();;
-		
-		System.out.println(prod.buscar(codigo));
-		JOptionPane.showMessageDialog(null, datos, "Información", JOptionPane.INFORMATION_MESSAGE);
-	}
-	
-	public void mouseClicked(MouseEvent e) {
-		if (e.getSource() == tblTable) {
-			mouseClickedTblTable(e);
-		}
-	}
-	
-	public void mouseEntered(MouseEvent e) {
-	}
-	public void mouseExited(MouseEvent e) {
-	}
-	public void mousePressed(MouseEvent e) {
-	}
-	public void mouseReleased(MouseEvent e) {
-	}
-	protected void mouseClickedTblTable(MouseEvent e) {
-		mostrarTxt();
-		editarFila();
-	}
-	
-	void editarFila() {
-		if (prod.tamanio() == 0)
-			limpiar();
-		else {
-			Producto p = prod.obtener(tblTable.getSelectedRow());
-			txtCodigo.setText("" + p.getCodigoProducto());
-			txtNombre.setText(p.getNombre());
-			txtPrecio.setText("" + p.getPrecio());
-			txtStockAct.setText("" + p.getStockActual());
-			txtStockMin.setText("" + p.getStockMinimo());
-			txtStockMax.setText("" + p.getStockMaximo());
-			/*txtDni.setText(x.getDni());
-			txtPeso.setText("" + x.getPeso());
-			txtEstatura.setText("" + x.getEstatura());
-			cboEstadoCivil.setSelectedIndex(x.getEstado());*/
-		}
-	}
-	
-	protected void actionPerformedBtnEliminar(ActionEvent e) {
-		
-		int codigo = Integer.parseInt(txtCodigo.getText());
-		
-		prod.eliminar(codigo);
-	}
-	
-	protected void actionPerformedBtnCambiar(ActionEvent e) {
-		
-		txtNombre.getText();
-		txtPrecio.getText();
-		txtStockAct.getText();
-		txtStockMin.getText();
-		txtStockMax.getText();
-		
-		
+		return JOptionPane.showConfirmDialog(this, s, "Alerta", 0, 1, null);
 	}
 }

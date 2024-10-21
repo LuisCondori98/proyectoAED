@@ -27,6 +27,7 @@ public class dlgCliente extends JDialog {
 	private JTextField textField_2;
 	private JLabel lblNombre;
 	private JLabel lblApellidos;
+	private JButton btnNewButton;
 
 	/**
 	 * Launch the application.
@@ -77,7 +78,7 @@ public class dlgCliente extends JDialog {
 		getContentPane().add(lblCodigo);
 		
 		textField = new JTextField();
-		textField.setBounds(84, 47, 127, 24);
+		textField.setBounds(84, 47, 64, 24);
 		getContentPane().add(textField);
 		textField.setColumns(10);
 		
@@ -100,5 +101,10 @@ public class dlgCliente extends JDialog {
 		lblApellidos.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblApellidos.setBounds(10, 115, 64, 24);
 		getContentPane().add(lblApellidos);
+		
+		btnNewButton = new JButton("Buscar");
+		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		btnNewButton.setBounds(158, 48, 78, 21);
+		getContentPane().add(btnNewButton);
 	}
 }

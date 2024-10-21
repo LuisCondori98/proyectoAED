@@ -36,9 +36,9 @@ private ArrayList<Producto> producto;
 		return producto.get(i);
 	}
 	
-	public void eliminar(int i) {
+	public void eliminar(Producto p) {
 		
-		producto.remove(i);
+		producto.remove(p);
 	}
 	
 	public Producto buscar(int codigo) {
@@ -54,11 +54,6 @@ private ArrayList<Producto> producto;
 		}
 		
 		return null;
-	}
-	
-	public void eliminar(Producto p) {
-		
-		producto.remove(p);
 	}
 	
 	public int codigoCorrelativo() {
